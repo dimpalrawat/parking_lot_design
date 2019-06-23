@@ -78,3 +78,18 @@ func (this *ParkingLot) GetRegNosForColor(color string) string {
 	}
 	return resultString[:resultStrLen-2]
 }
+
+//Function returns list of slotNos for given color
+func (this *ParkingLot) GetSlotNosForColor(color string) string {
+	resultString := ""
+	for index, vehicle := range this.BookedSlots {
+		if vehicle != nil && vehicle.Color == color {
+			resultString = resultString + util.IntToString(index+1) + ", "
+		}
+	}
+	resultStrLen := len(resultString)
+	if resultStrLen < 2 {
+		return NOT_FOUND
+	}
+	return resultString[:resultStrLen-2]
+}

@@ -74,8 +74,8 @@ func executeParkingLot(fileContentScanner *bufio.Scanner) bool {
 				slotNumber := parkingSlot.GetSlotNoFromRegNo(commandWords[1])
 				fmt.Println(slotNumber)
 			case 7:
-				//TODO: SLOT NUMBERS FOR COLOR
-
+				slotNumbers := parkingSlot.GetSlotNosForColor(commandWords[1])
+				fmt.Println(slotNumbers)
 			default:
 				fmt.Println("Please enter a valid command")
 			}
