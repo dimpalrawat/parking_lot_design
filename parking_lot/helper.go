@@ -2,8 +2,6 @@ package parking_lot
 
 import (
 	"container/heap"
-
-	"strconv"
 )
 
 type VacatedSlotsHeap []int
@@ -30,17 +28,6 @@ func (h *VacatedSlotsHeap) InitializeHeap(n int) {
 	for i := 1; i <= n; i++ {
 		heap.Push(h, i)
 	}
-}
-
-//Function converts string to int
-func StringToInt(s string) int {
-	i, _ := strconv.ParseInt(s, 10, 32)
-	return int(i)
-}
-
-//Function converts int to string
-func IntToString(i int) string {
-	return strconv.FormatInt(int64(i), 10)
 }
 
 //Function takes the vehicle object and returns slotNo if available else -1
