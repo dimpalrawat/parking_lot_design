@@ -162,3 +162,44 @@ func TestGetRegNosForColor(t *testing.T) {
 		t.Errorf("Error GetRegNosForColor: Expected: %v Actual: %v", expectedBlue, actualBlue)
 	}
 }
+
+func TestGetSlotNosForColor(t *testing.T) {
+	parkingLotSize := 4
+	parkingLot := ParkingLot{
+		RegToSlotNoMap:   make(map[string]int),
+		BookedSlots:      make([]*Vehicle, parkingLotSize),
+		VacatedSlots:     &VacatedSlotsHeap{},
+	}
+	parkingLot.ParkingSlotSize = parkingLotSize
+	parkingLot.VacatedSlots.InitializeHeap(parkingLotSize)
+	vehicle1 := Vehicle{
+		Color:     "White",
+		RegNumber: "KA-01-HH-1234",
+	}
+	slot1 := parkingLot.ParkVehicle(vehicle1)
+	vehicle2 := Vehicle{
+		Color:     "Black",
+		RegNumber: "KA-01-BB-0001",
+	}
+	parkingLot.ParkVehicle(vehicle2)
+	vehicle3 := Vehicle{
+		Color:     "White",
+		RegNumber: "KA-01-HH-9999",
+	}
+	slot3 := parkingLot.ParkVehicle(vehicle3)
+	vehicle4 := Vehicle{
+		Color:     "Red",
+		RegNumber: "KA-01-HH-7777",
+	}
+	slot4 := parkingLot.ParkVehicle(vehicle4)
+	expectedRed := util.IntToString(slot4)
+	actualRed := parkingLot.GetSlotNosForColor("Red")
+	if actualRed != expectedRed {
+		t.Errorf("Error GetSlotNosForColor: Expected: %v Actual: %v", expectedRed, actualRed)
+	}
+	expectedWhite := util.IntToString(slot1) + ", " + util.IntToString(slot3)
+	actualWhite := parkingLot.GetSlotNosForColor("White")
+	if expectedWhite != actualWhite {
+		t.Errorf("Error GetSlotNosForColor: Expected: %v Actual: %v", expectedWhite, actualWhite)
+	}
+}
