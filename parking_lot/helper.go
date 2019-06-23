@@ -39,10 +39,11 @@ func (h *VacatedSlotsHeap) InitializeHeap(n int) {
 
 func executeInputFromFile() bool {
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Please keep your input file inside parking_lot/static/input_files folder.")
+	fmt.Println("Please keep your input file with .txt extension inside parking_lot/static/input_files folder.")
 	fmt.Print("Enter your file name: ")
 	inputFileName, err := reader.ReadString('\n')
-	if err != nil || inputFileName != "" && len(inputFileName) <2 {
+	fileExtension := file_handlers.GetFileExtension(inputFileName)
+	if err != nil || inputFileName == "\n" || (inputFileName != "\n" && (len(inputFileName) <2  || fileExtension[:len(fileExtension)-1] != ".txt")) {
 		fmt.Println("Invalid input file name")
 		return false
 	} else {
