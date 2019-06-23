@@ -1,10 +1,12 @@
 package parking_lot
 
 import (
+	"bufio"
 	"fmt"
 	"strings"
+
+	"parking_lot_design/util"
 	"parking_lot_design/util/file_handlers"
-	"bufio"
 )
 
 func MainParkingLot(inputFileName string) bool {
@@ -31,7 +33,7 @@ func executeParkingLot(fileContentScanner *bufio.Scanner) bool {
 		commandWords := strings.Split(command, " ")
 		if commandNumber == 1 {
 			if CommandMap[Command(commandWords[0])] == 1 {
-				slotSize := StringToInt(commandWords[1])
+				slotSize := util.StringToInt(commandWords[1])
 				parkingSlot.ParkingSlotSize = slotSize
 				parkingSlot.VacatedSlots.InitializeHeap(slotSize)
 				parkingSlot.BookedSlots = make([]*Vehicle, slotSize)
@@ -54,10 +56,10 @@ func executeParkingLot(fileContentScanner *bufio.Scanner) bool {
 				if slotNo == -1 {
 					fmt.Println("Sorry, parking lot is full")
 				} else {
-					fmt.Println("Allocated slot number: " + IntToString(slotNo))
+					fmt.Println("Allocated slot number: " + util.IntToString(slotNo))
 				}
 			case 3:
-				isVacated := parkingSlot.VacateParkingSpot(StringToInt(commandWords[1]))
+				isVacated := parkingSlot.VacateParkingSpot(util.StringToInt(commandWords[1]))
 				if isVacated {
 					fmt.Println("Slot number " + commandWords[1] + " is free")
 				} else {
@@ -68,7 +70,8 @@ func executeParkingLot(fileContentScanner *bufio.Scanner) bool {
 			case 5:
 				//TODO: REG NUMBERS FOR COLOR
 			case 6:
-				//TODO: SLOT NUMBER FOR REGISTRATION NUMBER
+				slotNumber := parkingSlot.GetSlotNoFromRegNo(commandWords[1])
+				fmt.Println(slotNumber)
 			case 7:
 				//TODO: SLOT NUMBERS FOR COLOR
 
