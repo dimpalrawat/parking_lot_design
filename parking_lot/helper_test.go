@@ -203,3 +203,53 @@ func TestGetSlotNosForColor(t *testing.T) {
 		t.Errorf("Error GetSlotNosForColor: Expected: %v Actual: %v", expectedWhite, actualWhite)
 	}
 }
+
+func TestPrintStatus(t *testing.T) {
+	parkingLotSize := 4
+	parkingLot := ParkingLot{
+		RegToSlotNoMap:   make(map[string]int),
+		BookedSlots:      make([]*Vehicle, parkingLotSize),
+		VacatedSlots:     &VacatedSlotsHeap{},
+	}
+	parkingLot.ParkingSlotSize = parkingLotSize
+	parkingLot.VacatedSlots.InitializeHeap(parkingLotSize)
+	expectedStatus := "Novehicleisparked"
+	actualStatus := parkingLot.PrintStatus()
+	actualStatus = util.StripSpaces(util.StripNewLines(actualStatus))
+	if actualStatus != expectedStatus {
+		t.Errorf("Error GetSlotNosForColor: Expected: %v Actual: %v", expectedStatus, actualStatus)
+	}
+	vehicle1 := Vehicle{
+		Color:     "White",
+		RegNumber: "KA-01-HH-1234",
+	}
+	parkingLot.ParkVehicle(vehicle1)
+	vehicle2 := Vehicle{
+		Color:     "Black",
+		RegNumber: "KA-01-BB-0001",
+	}
+	parkingLot.ParkVehicle(vehicle2)
+	vehicle3 := Vehicle{
+		Color:     "White",
+		RegNumber: "KA-01-HH-9999",
+	}
+	slot3 := parkingLot.ParkVehicle(vehicle3)
+	vehicle4 := Vehicle{
+		Color:     "Red",
+		RegNumber: "KA-01-HH-7777",
+	}
+	parkingLot.ParkVehicle(vehicle4)
+	expectedStatus = "SlotNo.RegistrationNoColour1KA-01-HH-1234White2KA-01-BB-0001Black3KA-01-HH-9999White4KA-01-HH-7777Red"
+	actualStatus = parkingLot.PrintStatus()
+	actualStatus = util.StripSpaces(util.StripNewLines(actualStatus))
+	if actualStatus != expectedStatus {
+		t.Errorf("Error GetSlotNosForColor: Expected: %v Actual: %v", expectedStatus, actualStatus)
+	}
+	parkingLot.VacateParkingSpot(slot3)
+	expectedStatus = "SlotNo.RegistrationNoColour1KA-01-HH-1234White2KA-01-BB-0001Black4KA-01-HH-7777Red"
+	actualStatus = parkingLot.PrintStatus()
+	actualStatus = util.StripSpaces(util.StripNewLines(actualStatus))
+	if expectedStatus != actualStatus {
+		t.Errorf("Error GetSlotNosForColor: Expected: %v Actual: %v", expectedStatus, actualStatus)
+	}
+}
