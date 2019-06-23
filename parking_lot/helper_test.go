@@ -36,3 +36,36 @@ func TestParkVehicle(t *testing.T) {
 		t.Errorf("Error ParkVehicle: Expected: %v Actual: %v", -1, slot3)
 	}
 }
+
+func TestVacateParkingSpot(t *testing.T) {
+	parkingLotSize := 2
+	parkingLot := ParkingLot{
+		RegToSlotNoMap:   make(map[string]int),
+		BookedSlots:      make([]*Vehicle, parkingLotSize),
+		VacatedSlots:     &VacatedSlotsHeap{},
+	}
+	parkingLot.ParkingSlotSize = parkingLotSize
+	parkingLot.VacatedSlots.InitializeHeap(parkingLotSize)
+	vehicle1 := Vehicle{
+		Color:     "White",
+		RegNumber: "KA-01-HH-1234",
+	}
+	slot1 := parkingLot.ParkVehicle(vehicle1)
+	vehicle2 := Vehicle{
+		Color:     "Black",
+		RegNumber: "KA-01-BB-0001",
+	}
+	slot2 := parkingLot.ParkVehicle(vehicle2)
+	isVacated := parkingLot.VacateParkingSpot(slot1)
+	if isVacated != true {
+		t.Errorf("Error VacateParkingSpot: Expected: %v Actual: %v", true, isVacated)
+	}
+	isVacated = parkingLot.VacateParkingSpot(slot2)
+	if isVacated != true {
+		t.Errorf("Error VacateParkingSpot: Expected: %v Actual: %v", true, isVacated)
+	}
+	isVacated = parkingLot.VacateParkingSpot(slot2)
+	if isVacated != false {
+		t.Errorf("Error VacateParkingSpot: Expected: %v Actual: %v", false, isVacated)
+	}
+}
