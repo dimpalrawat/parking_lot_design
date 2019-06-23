@@ -3,7 +3,7 @@ package parking_lot
 import (
 	"fmt"
 	"strings"
-	"parking_lot_design/file_handlers"
+	"parking_lot_design/util/file_handlers"
 	"bufio"
 )
 
