@@ -59,7 +59,7 @@ func executeInputFromFile() bool {
 }
 
 func executeInputFromConsole() bool {
-	fmt.Println("Please enter your commands.")
+	fmt.Println("Please enter your commands:")
 	scanner := bufio.NewScanner(os.Stdin)
 	return executeParkingLot(scanner)
 }
@@ -87,7 +87,7 @@ func executeParkingLot(fileContentScanner *bufio.Scanner) bool {
 				isInitialized = true
 				continue
 			}
-			fmt.Println("This program currently support only one active parking slot at a time.")
+			fmt.Println("One parking slot is already initialized. This program currently support only one active parking slot at a time.")
 		case 2:
 			if !isInitialized {
 				fmt.Println("First step should be to create a parking lot.")
@@ -142,7 +142,7 @@ func executeParkingLot(fileContentScanner *bufio.Scanner) bool {
 			slotNumbers := parkingSlot.GetSlotNosForColor(commandWords[1])
 			fmt.Println(slotNumbers)
 		default:
-			fmt.Println("Please enter a valid command")
+			fmt.Println("Please enter a valid command or enter exit to stop")
 		}
 	}
 	return isInitialized
