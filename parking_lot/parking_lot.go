@@ -3,16 +3,33 @@ package parking_lot
 import (
 	"fmt"
 	"strings"
+	"parking_lot_design/file_handlers"
+	"bufio"
 )
 
-func MainParkingLot(commands []string) bool {
+func MainParkingLot(inputFileName string) bool {
+	file, err := file_handlers.GetFile(inputFileName)
+	if err != nil || file == nil {
+		fmt.Printf("Error in reading lines: %s", err)
+		return false
+	}
+	defer file.Close()
+	fileContentScanner := file_handlers.GetFileContentScanner(file)
+	isCompleted := executeParkingLot(fileContentScanner)
+	return isCompleted
+}
+
+func executeParkingLot(fileContentScanner *bufio.Scanner) bool {
 	parkingSlot := ParkingLot{
 		RegToSlotNoMap: make(map[string]int),
 		VacatedSlots:   &VacatedSlotsHeap{},
 	}
-	for commandNumber, command := range commands {
+	commandNumber := 0
+	for fileContentScanner.Scan() {
+		commandNumber++
+		command := fileContentScanner.Text()
 		commandWords := strings.Split(command, " ")
-		if commandNumber == 0 {
+		if commandNumber == 1 {
 			if CommandMap[Command(commandWords[0])] == 1 {
 				slotSize := StringToInt(commandWords[1])
 				parkingSlot.ParkingSlotSize = slotSize
