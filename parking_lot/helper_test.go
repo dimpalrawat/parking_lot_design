@@ -1,6 +1,8 @@
 package parking_lot
 
 import (
+	"bufio"
+	"strings"
 	"testing"
 
 	"parking_lot_design/util"
@@ -251,5 +253,83 @@ func TestPrintStatus(t *testing.T) {
 	actualStatus = util.StripSpaces(util.StripNewLines(actualStatus))
 	if expectedStatus != actualStatus {
 		t.Errorf("Error GetSlotNosForColor: Expected: %v Actual: %v", expectedStatus, actualStatus)
+	}
+}
+
+func TestExecuteParkingLot(t *testing.T) {
+	strInput1 := `park KA-01-HH-1233 White`
+	scanner := bufio.NewScanner(strings.NewReader(strInput1))
+	strReader := strings.NewReader(strInput1)
+	strReader.ReadByte()
+	result1 := executeParkingLot(scanner)
+	if result1 != false {
+		t.Errorf("Error parkingLot: Expected: %v Actual: %v ", false, result1)
+	}
+	strInput2 := ``
+	scanner = bufio.NewScanner(strings.NewReader(strInput2))
+	result2 := executeParkingLot(scanner)
+	if result2 != false {
+		t.Errorf("Error parkingLot 2: Expected: %v Actual: %v ", false, result2)
+	}
+	strInput3 := `create_parking_lot 6
+park KA-01-HH-1233 White
+park KA-01-HH-9999 White
+park KA-01-BB-0001 Black
+park KA-01-HH-7777 Red
+park KA-01-HH-2701 Blue
+park KA-01-HH-3141 Black
+leave 4
+status
+park KA-01-P-333 White
+park DL-12-AA-9999 White
+registration_numbers_for_cars_with_colour White
+slot_numbers_for_cars_with_colour White
+slot_number_for_registration_number KA-01-HH-3141
+slot_number_for_registration_number MH-04-AY-1111`
+	scanner = bufio.NewScanner(strings.NewReader(strInput3))
+	result3 := executeParkingLot(scanner)
+	if result3 != true {
+		t.Errorf("Error parkingLot: Expected: %v Actual: %v ", true, result3)
+	}
+	strInput4 := `create_parking_lot 4
+park KA-01-HH-1233 White
+park KA-01-HH-9999 Black
+create_parking_lot 4
+slot_numbers_for_cars_with_colour White
+slot_number_for_registration_number KA-01-HH-1233
+slot_number_for_registration_number MH-04-AY-1111`
+	scanner = bufio.NewScanner(strings.NewReader(strInput4))
+	result4 := executeParkingLot(scanner)
+	if result4 != true {
+		t.Errorf("Error parkingLot: Expected: %v Actual: %v ", true, result4)
+	}
+	strInput5 := `create_parking_lot 4
+leave 3
+`
+	scanner = bufio.NewScanner(strings.NewReader(strInput5))
+	result5:= executeParkingLot(scanner)
+	if result5 != true {
+		t.Errorf("Error parkingLot: Expected: %v Actual: %v ", true, result5)
+	}
+	strInput6 := `
+
+
+`
+	scanner = bufio.NewScanner(strings.NewReader(strInput6))
+	result6:= executeParkingLot(scanner)
+	if result6 != false {
+		t.Errorf("Error parkingLot: Expected: %v Actual: %v ", false, result6)
+	}
+	strInput7 := `
+park KA-01-HH-1233 White
+park KA-01-HH-9999 Black
+leave 5
+slot_numbers_for_cars_with_colour White
+slot_number_for_registration_number KA-01-HH-1233
+`
+	scanner = bufio.NewScanner(strings.NewReader(strInput7))
+	result7:= executeParkingLot(scanner)
+	if result6 != false {
+		t.Errorf("Error parkingLot: Expected: %v Actual: %v ", false, result7)
 	}
 }
