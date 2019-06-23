@@ -68,7 +68,8 @@ func executeParkingLot(fileContentScanner *bufio.Scanner) bool {
 			case 4:
 				//TODO: STATUS
 			case 5:
-				//TODO: REG NUMBERS FOR COLOR
+				regNumbers := parkingSlot.GetRegNosForColor(commandWords[1])
+				fmt.Println(regNumbers)
 			case 6:
 				slotNumber := parkingSlot.GetSlotNoFromRegNo(commandWords[1])
 				fmt.Println(slotNumber)

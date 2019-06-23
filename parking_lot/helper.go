@@ -63,3 +63,18 @@ func (this *ParkingLot) GetSlotNoFromRegNo(registrationNo string) string {
 	}
 	return util.IntToString(slotNo)
 }
+
+//Function returns list of registrationNos for given color
+func (this *ParkingLot) GetRegNosForColor(color string) string {
+	resultString := ""
+	for _, vehicle := range this.BookedSlots {
+		if vehicle != nil && vehicle.Color == color {
+			resultString = resultString + vehicle.RegNumber + ", "
+		}
+	}
+	resultStrLen := len(resultString)
+	if resultStrLen < 2 {
+		return NOT_FOUND
+	}
+	return resultString[:resultStrLen-2]
+}
