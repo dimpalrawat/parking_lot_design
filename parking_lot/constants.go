@@ -19,3 +19,7 @@ var CommandMap = map[Command]int{
 	SLOT_NO_FOR_REG_NO: 6,
 	SLOT_NOS_FOR_COLOR: 7,
 }
+
+const (
+	NOT_FOUND = "Not found"
+)

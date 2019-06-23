@@ -2,6 +2,7 @@ package parking_lot
 
 import (
 	"container/heap"
+	"parking_lot_design/util"
 )
 
 type VacatedSlotsHeap []int
@@ -52,4 +53,13 @@ func (this *ParkingLot) VacateParkingSpot(spotNumber int) bool {
 	delete(this.RegToSlotNoMap, vechicle.RegNumber)
 	this.BookedSlots[spotNumber-1] = nil
 	return true
+}
+
+//Function returns slotNo for given registrationNo
+func (this *ParkingLot) GetSlotNoFromRegNo(registrationNo string) string {
+	slotNo, ok := this.RegToSlotNoMap[registrationNo]
+	if !ok {
+		return NOT_FOUND
+	}
+	return util.IntToString(slotNo)
 }
