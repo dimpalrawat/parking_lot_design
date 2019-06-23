@@ -11,9 +11,9 @@ import (
 func TestParkVehicle(t *testing.T) {
 	parkingLotSize := 2
 	parkingLot := ParkingLot{
-		RegToSlotNoMap:   make(map[string]int),
-		BookedSlots:      make([]*Vehicle, parkingLotSize),
-		VacatedSlots:     &VacatedSlotsHeap{},
+		RegToSlotNoMap: make(map[string]int),
+		Slots:          make([]*Vehicle, parkingLotSize),
+		VacatedSlots:   &VacatedSlotsHeap{},
 	}
 	parkingLot.ParkingSlotSize = parkingLotSize
 	parkingLot.VacatedSlots.InitializeHeap(parkingLotSize)
@@ -46,9 +46,9 @@ func TestParkVehicle(t *testing.T) {
 func TestVacateParkingSpot(t *testing.T) {
 	parkingLotSize := 2
 	parkingLot := ParkingLot{
-		RegToSlotNoMap:   make(map[string]int),
-		BookedSlots:      make([]*Vehicle, parkingLotSize),
-		VacatedSlots:     &VacatedSlotsHeap{},
+		RegToSlotNoMap: make(map[string]int),
+		Slots:          make([]*Vehicle, parkingLotSize),
+		VacatedSlots:   &VacatedSlotsHeap{},
 	}
 	parkingLot.ParkingSlotSize = parkingLotSize
 	parkingLot.VacatedSlots.InitializeHeap(parkingLotSize)
@@ -79,9 +79,9 @@ func TestVacateParkingSpot(t *testing.T) {
 func TestGetSlotNoFromRegNo(t *testing.T) {
 	parkingLotSize := 2
 	parkingLot := ParkingLot{
-		RegToSlotNoMap:   make(map[string]int),
-		BookedSlots:      make([]*Vehicle, parkingLotSize),
-		VacatedSlots:     &VacatedSlotsHeap{},
+		RegToSlotNoMap: make(map[string]int),
+		Slots:          make([]*Vehicle, parkingLotSize),
+		VacatedSlots:   &VacatedSlotsHeap{},
 	}
 	parkingLot.ParkingSlotSize = parkingLotSize
 	parkingLot.VacatedSlots.InitializeHeap(parkingLotSize)
@@ -112,9 +112,9 @@ func TestGetSlotNoFromRegNo(t *testing.T) {
 func TestGetRegNosForColor(t *testing.T) {
 	parkingLotSize := 6
 	parkingLot := ParkingLot{
-		RegToSlotNoMap:   make(map[string]int),
-		BookedSlots:      make([]*Vehicle, parkingLotSize),
-		VacatedSlots:     &VacatedSlotsHeap{},
+		RegToSlotNoMap: make(map[string]int),
+		Slots:          make([]*Vehicle, parkingLotSize),
+		VacatedSlots:   &VacatedSlotsHeap{},
 	}
 	parkingLot.ParkingSlotSize = parkingLotSize
 	parkingLot.VacatedSlots.InitializeHeap(parkingLotSize)
@@ -168,9 +168,9 @@ func TestGetRegNosForColor(t *testing.T) {
 func TestGetSlotNosForColor(t *testing.T) {
 	parkingLotSize := 4
 	parkingLot := ParkingLot{
-		RegToSlotNoMap:   make(map[string]int),
-		BookedSlots:      make([]*Vehicle, parkingLotSize),
-		VacatedSlots:     &VacatedSlotsHeap{},
+		RegToSlotNoMap: make(map[string]int),
+		Slots:          make([]*Vehicle, parkingLotSize),
+		VacatedSlots:   &VacatedSlotsHeap{},
 	}
 	parkingLot.ParkingSlotSize = parkingLotSize
 	parkingLot.VacatedSlots.InitializeHeap(parkingLotSize)
@@ -209,9 +209,9 @@ func TestGetSlotNosForColor(t *testing.T) {
 func TestPrintStatus(t *testing.T) {
 	parkingLotSize := 4
 	parkingLot := ParkingLot{
-		RegToSlotNoMap:   make(map[string]int),
-		BookedSlots:      make([]*Vehicle, parkingLotSize),
-		VacatedSlots:     &VacatedSlotsHeap{},
+		RegToSlotNoMap: make(map[string]int),
+		Slots:          make([]*Vehicle, parkingLotSize),
+		VacatedSlots:   &VacatedSlotsHeap{},
 	}
 	parkingLot.ParkingSlotSize = parkingLotSize
 	parkingLot.VacatedSlots.InitializeHeap(parkingLotSize)

@@ -51,7 +51,7 @@ func executeInputFromFile() bool {
 	}
 	file, err := file_handlers.GetFile(inputFileName)
 	if err != nil || file == nil {
-		fmt.Printf("Error in reading lines: %s", err)
+		fmt.Println("Error in reading lines: ", err)
 		return false
 	}
 	defer file.Close()
@@ -83,7 +83,7 @@ func executeParkingLot(fileContentScanner *bufio.Scanner) bool {
 				slotSize := util.StringToInt(commandWords[1])
 				parkingSlot.ParkingSlotSize = slotSize
 				parkingSlot.VacatedSlots.InitializeHeap(slotSize)
-				parkingSlot.BookedSlots = make([]*Vehicle, slotSize)
+				parkingSlot.Slots = make([]*Vehicle, slotSize)
 				fmt.Println("Created a parking lot with " + commandWords[1] + " slots")
 				isInitialized = true
 				continue
@@ -157,19 +157,19 @@ func (this *ParkingLot) ParkVehicle(vehicle Vehicle) int {
 	slotNo := heap.Pop(this.VacatedSlots)
 	intSlotNo := slotNo.(int)
 	this.RegToSlotNoMap[vehicle.RegNumber] = intSlotNo
-	this.BookedSlots[intSlotNo-1] = &vehicle
+	this.Slots[intSlotNo-1] = &vehicle
 	return slotNo.(int)
 }
 
 //Function vacates the parking slot and returns true if vehicle is present else returns false
 func (this *ParkingLot) VacateParkingSpot(spotNumber int) bool {
-	if this.BookedSlots[spotNumber-1] == nil {
+	if this.Slots[spotNumber-1] == nil {
 		return false
 	}
 	heap.Push(this.VacatedSlots, spotNumber)
-	vechicle := this.BookedSlots[spotNumber-1]
+	vechicle := this.Slots[spotNumber-1]
 	delete(this.RegToSlotNoMap, vechicle.RegNumber)
-	this.BookedSlots[spotNumber-1] = nil
+	this.Slots[spotNumber-1] = nil
 	return true
 }
 
@@ -185,7 +185,7 @@ func (this *ParkingLot) GetSlotNoFromRegNo(registrationNo string) string {
 //Function returns list of registrationNos for given color
 func (this *ParkingLot) GetRegNosForColor(color string) string {
 	resultString := ""
-	for _, vehicle := range this.BookedSlots {
+	for _, vehicle := range this.Slots {
 		if vehicle != nil && vehicle.Color == color {
 			resultString = resultString + vehicle.RegNumber + ", "
 		}
@@ -200,7 +200,7 @@ func (this *ParkingLot) GetRegNosForColor(color string) string {
 //Function returns list of slotNos for given color
 func (this *ParkingLot) GetSlotNosForColor(color string) string {
 	resultString := ""
-	for index, vehicle := range this.BookedSlots {
+	for index, vehicle := range this.Slots {
 		if vehicle != nil && vehicle.Color == color {
 			resultString = resultString + util.IntToString(index+1) + ", "
 		}
@@ -219,7 +219,7 @@ func (this *ParkingLot) PrintStatus() string {
 		return NO_VEHICLE_PARKED
 	}
 	resultString := "Slot No.     Registration No        Colour\n"
-	for index, vehicle := range this.BookedSlots {
+	for index, vehicle := range this.Slots {
 		if vehicle != nil {
 			resultString = resultString + util.IntToString(index+1) + "            " + vehicle.RegNumber + "          " + vehicle.Color + "\n"
 		}

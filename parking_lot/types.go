@@ -8,16 +8,17 @@ type Vehicle struct {
 }
 
 type ParkingLot struct {
-	ParkingSlotSize  int
-	VacatedSlots     *VacatedSlotsHeap
-	BookedSlots      []*Vehicle
-	RegToSlotNoMap   map[string]int
+	ParkingSlotSize int
+	VacatedSlots    *VacatedSlotsHeap
+	Slots           []*Vehicle
+	RegToSlotNoMap  map[string]int
 }
 
-type Slot struct {
+//Could have used a separate struct for slot
+/*type Slot struct {
 	SlotNo  int
 	Vehicle *Vehicle
-}
+}*/
 
 type ParkingLotInterface interface {
 	ParkVehicle(vehicle Vehicle) int
