@@ -338,4 +338,12 @@ slot_number_for_registration_number KA-01-HH-1233
 	if result6 != false {
 		t.Errorf("Error parkingLot: Expected: %v Actual: %v ", false, result7)
 	}
+	strInput8 := `
+exit
+`
+	scanner = bufio.NewScanner(strings.NewReader(strInput8))
+	result8:= executeParkingLot(scanner)
+	if result6 != false {
+		t.Errorf("Error parkingLot: Expected: %v Actual: %v ", false, result8)
+	}
 }
