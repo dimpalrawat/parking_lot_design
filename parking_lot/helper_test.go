@@ -2,7 +2,7 @@ package parking_lot
 
 import (
 	"testing"
-	
+
 	"parking_lot_design/util"
 )
 
@@ -104,5 +104,61 @@ func TestGetSlotNoFromRegNo(t *testing.T) {
 	slotNumber3 := util.StringToInt(parkingLot.GetSlotNoFromRegNo("KA-01-CC-3241"))
 	if slotNumber3 != 0 {
 		t.Errorf("Error GetSlotNoFromRegNo: Expected: %v Actual: %v", 0, slotNumber3)
+	}
+}
+
+func TestGetRegNosForColor(t *testing.T) {
+	parkingLotSize := 6
+	parkingLot := ParkingLot{
+		RegToSlotNoMap:   make(map[string]int),
+		BookedSlots:      make([]*Vehicle, parkingLotSize),
+		VacatedSlots:     &VacatedSlotsHeap{},
+	}
+	parkingLot.ParkingSlotSize = parkingLotSize
+	parkingLot.VacatedSlots.InitializeHeap(parkingLotSize)
+	vehicle1 := Vehicle{
+		Color:     "White",
+		RegNumber: "KA-01-HH-1234",
+	}
+	parkingLot.ParkVehicle(vehicle1)
+	vehicle2 := Vehicle{
+		Color:     "Black",
+		RegNumber: "KA-01-BB-0001",
+	}
+	parkingLot.ParkVehicle(vehicle2)
+	vehicle3 := Vehicle{
+		Color:     "White",
+		RegNumber: "KA-01-HH-9999",
+	}
+	parkingLot.ParkVehicle(vehicle3)
+	vehicle4 := Vehicle{
+		Color:     "Red",
+		RegNumber: "KA-01-HH-7777",
+	}
+	parkingLot.ParkVehicle(vehicle4)
+	vehicle5 := Vehicle{
+		Color:     "White",
+		RegNumber: "KA-01-HH-8888",
+	}
+	parkingLot.ParkVehicle(vehicle5)
+	vehicle6 := Vehicle{
+		Color:     "White",
+		RegNumber: "KA-01-DD-3333",
+	}
+	parkingLot.ParkVehicle(vehicle6)
+	expectedRed := "KA-01-HH-7777"
+	actualRed := parkingLot.GetRegNosForColor("Red")
+	if actualRed != expectedRed {
+		t.Errorf("Error GetRegNosForColor: Expected: %v Actual: %v", expectedRed, actualRed)
+	}
+	expectedWhite := "KA-01-HH-1234, KA-01-HH-9999, KA-01-HH-8888, KA-01-DD-3333"
+	actualWhite := parkingLot.GetRegNosForColor("White")
+	if expectedWhite != actualWhite {
+		t.Errorf("Error GetRegNosForColor: Expected: %v Actual: %v", expectedWhite, actualWhite)
+	}
+	expectedBlue := NOT_FOUND
+	actualBlue := parkingLot.GetRegNosForColor("Blue")
+	if expectedBlue != actualBlue {
+		t.Errorf("Error GetRegNosForColor: Expected: %v Actual: %v", expectedBlue, actualBlue)
 	}
 }
