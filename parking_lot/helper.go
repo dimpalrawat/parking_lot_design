@@ -93,3 +93,22 @@ func (this *ParkingLot) GetSlotNosForColor(color string) string {
 	}
 	return resultString[:resultStrLen-2]
 }
+
+//Functions returns the current status of parking_lot
+//Appending fixed number of spaces. Can add variable number of spaces also depending upon the slotNo
+func (this *ParkingLot) PrintStatus() string {
+	if this.VacatedSlots.Len() == this.ParkingSlotSize {
+		return NO_VEHICLE_PARKED
+	}
+	resultString := "Slot No.     Registration No        Colour\n"
+	for index, vehicle := range this.BookedSlots {
+		if vehicle != nil {
+			resultString = resultString + util.IntToString(index+1) + "            " + vehicle.RegNumber + "          " + vehicle.Color + "\n"
+		}
+	}
+	resultLength := len(resultString)
+	if resultLength < 2 {
+		return resultString
+	}
+	return resultString[:resultLength-1]
+}

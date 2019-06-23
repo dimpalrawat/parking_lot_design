@@ -66,7 +66,7 @@ func executeParkingLot(fileContentScanner *bufio.Scanner) bool {
 					fmt.Println("No vehicle is parked on slot:" + commandWords[1])
 				}
 			case 4:
-				//TODO: STATUS
+				fmt.Println(parkingSlot.PrintStatus())
 			case 5:
 				regNumbers := parkingSlot.GetRegNosForColor(commandWords[1])
 				fmt.Println(regNumbers)

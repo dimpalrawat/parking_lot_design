@@ -22,4 +22,5 @@ var CommandMap = map[Command]int{
 
 const (
 	NOT_FOUND = "Not found"
+	NO_VEHICLE_PARKED = "No vehicle is parked"
 )
