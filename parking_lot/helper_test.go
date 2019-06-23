@@ -172,6 +172,12 @@ func TestGetSlotNosForColor(t *testing.T) {
 		Slots:          make([]*Vehicle, parkingLotSize),
 		VacatedSlots:   &VacatedSlotsHeap{},
 	}
+	expected := NOT_FOUND
+	actual := parkingLot.GetSlotNosForColor("Red")
+	if actual != expected {
+		t.Errorf("Error GetSlotNosForColor: Expected: %v Actual: %v", expected, actual)
+	}
+
 	parkingLot.ParkingSlotSize = parkingLotSize
 	parkingLot.VacatedSlots.InitializeHeap(parkingLotSize)
 	vehicle1 := Vehicle{
