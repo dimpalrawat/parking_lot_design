@@ -22,4 +22,8 @@ type Slot struct {
 type ParkingLotInterface interface {
 	ParkVehicle(vehicle Vehicle) int
 	VacateParkingSpot(spotNumber int) bool
+	GetSlotNoFromRegNo(registrationNo string) string
+	GetSlotNosForColor(color string) string
+	GetRegNosForColor(color string) string
+	PrintStatus() string
 }
